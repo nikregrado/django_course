@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-sm-12">
+<h2>{{ category.name }}</h2>
+<hr>
+{% for game in game_category %}
+<div class="col-sm-4">
+<img src="{{ game.image.url }}" style="width: 80%; height: 290px;">
+<h4 class="text-center">{{ game.title }}</h4>
+<p class="text-center">Цена: {{ game.price }}</p>
+    <p class="text-center"><a href="#"><button class="btn btn-danger">Добавить в корзину</button></a></p>
+</div>
+{% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  {% block title %}
+  <title>Головна сторінка</title>
+  {% endblock title %}
+  {% load static %}
+  <!-- Bootstrap core CSS  "{% static 'css/bootstrap.css' %}"   "static/css/bootstrap.css" -->
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template "{% static 'css/shop-homepage.css' %}" "static/css/shop-homepage.css" -->
+  <link href="{% static 'css/shop-homepage.css' %}" rel="stylesheet">
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- "static/js/jquery.js" -->
+  <script src="{% static 'js/jquery.js' %}"></script>
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">{% if request.user.is_authenticated %}Вітаю, {{ request.user }}!{% else %}Вітаю, гість!{% endif%}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          {% if request.user.is_staff %}
+          <li>
+            <a class="nav-link" href="{% url 'admin:index' %}">Адміністрування</a>
+          </li>
+          {% endif %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'index' %}">На головну
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart' %}">Корзина <span style="color: white" id="cart_count">{{ cart_size }}</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user_order' %}">Особистий кабінет</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Вийти</a>
+          </li>
+
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Авторизуватися</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+  {% block content %}
+    <div class="row">
+      <div class="col-lg-3">
+
+        <h1 class="my-4">Магазин игр</h1>
+        <div class="list-group">
+		  {% for category in categories %}
+          <a href="{{ category.get_absolute_url }}" class="list-group-item">{{ category.name }}</a>
+		  {% endfor %}
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+      <div class="col-lg-9">
+
+        <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+
+        </div>
+
+        <div class="row">
+          {% for game in games %}
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="{{ game.get_absolute_url }}"><img class="card-img-top" src={{ game.image.url }} style="width:254px; heigth:254px;"></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="{{ game.get_absolute_url }}">{{ product.name }}</a>
+                </h4>
+                <h5>{{ game.price }} грн.</h5>
+                <p class="card-text">{{ game.description }}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted"></small>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endblock content %}
+    <h1> </h1>
+  <h1> </h1>
+  <h1> </h1>
+  <h1> </h1>
+  </div>
+
+<!---->
+  <!-- Footer -->
+  <footer class="py-5 bg-dark fixed-bottom">
+    <div class="container">
+      <p class="m-0 text-center text-white">Дудник М. П. 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <!-- "static/js/bootstrap.js" -->
+
+
+</body>
+
+</html>

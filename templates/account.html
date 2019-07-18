@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content%}
+
+<h3 class="text-center">Особистий кабінет</h3>
+<hr>
+<h4 class="text-center">Ваші замовлення</h4>
+<table class="table">
+    <tr bgcolor="#343A40">
+        <td class="text-center"><font color="#fff">
+            Номер замовлення
+        <td class="text-center"><font color="#fff">
+            Підсумкова вартість
+        </font></td>
+        <td class="text-center"><font color="#fff">
+            Дата замовлення
+        </font></td>
+        <td class="text-center"><font color="#fff">
+            Деталі замовлення
+        </font></td>
+    </tr>
+{% for order in account %}
+    <tr>
+        <td class="text-center">
+            {{ order.order_id }}
+        </td>
+
+        <td class="text-center">
+            {{ order.order_total }}
+        </td>
+        <td class="text-center">
+            {{ order.order_date }}
+        </td>
+        <td class="text-center">
+            <table align="center">
+                {% for cart in order.carts %}
+                <tr>
+                    <td class="text-center">
+                        {{ cart.product_name }}
+                    </td>
+                    <td class="text-center">
+                        {{ cart.quantity }}
+                    </td>
+                    <td class="text-center">
+                        {{ cart.cart_cost }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock content%}
